@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.top {
+    background-color:lightgray;
+    padding-bottom: 10px;
+}
+
+.heading h1 {
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding-top: 2rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+.heading p { 
+    text-align: center;
+}
+
+.searchBox {
+    text-align: center;
+    margin: 2rem;
+}
+
+.search-bar {
+    width: 400px;
+    height: 40px;
+    outline: none;
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+}
+
+.detail h3{
+    padding: 20px;
+}
