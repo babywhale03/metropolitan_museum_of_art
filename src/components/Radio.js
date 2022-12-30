@@ -9,8 +9,10 @@ function Radio({ children, value, name, defaultChecked, disabled }) {
           name={name}
           defaultChecked={defaultChecked}
           disabled={disabled}
+          style={{marginRight: 1 + 'em', marginBottom: 1 + 'em'}}
         />
         {children}
+        <p></p>
       </label>
     );
   }

@@ -42,12 +42,12 @@ function Home() {
     }
     const onSubmit = (event) => {
         event.preventDefault();
-        fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=${event.target.contact.value}`)
+        fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=${event.target.department.value}`)
         .then(response => response.json())
         .then((json) => {
             setSearch(true);
         })
-        alert(`${event.target.contact.value}`);
+        alert(`${event.target.department.value}`);
     }
     return (
         <div className="main">
@@ -73,63 +73,64 @@ function Home() {
             
             {search ? null : (
                 <div className="container">
+                    <h2>Choose Department</h2>
                     <form onSubmit={onSubmit}>
                     <RadioGroup>
-                        <Radio name="contact" value="1" defaultChecked>
+                        <Radio name="department" value="1" defaultChecked>
                         American Decorative Arts
                         </Radio>
-                        <Radio name="contact" value="3">
+                        <Radio name="department" value="3">
                         Ancient Near Eastern Art
                         </Radio>
-                        <Radio name="contact" value="4">
+                        <Radio name="department" value="4">
                         Arms and Armor
                         </Radio>
-                        <Radio name="contact" value="5">
+                        <Radio name="department" value="5">
                         Arts of Africa, Oceania, and the Americas
                         </Radio>
-                        <Radio name="contact" value="6">
+                        <Radio name="department" value="6">
                         Asian Art
                         </Radio>
-                        <Radio name="contact" value="7">
+                        <Radio name="department" value="7">
                         The Cloisters
                         </Radio>
-                        <Radio name="contact" value="8">
+                        <Radio name="department" value="8">
                         The Costume Institute
                         </Radio>
-                        <Radio name="contact" value="9">
+                        <Radio name="department" value="9">
                         Drawings and Prints
                         </Radio>
-                        <Radio name="contact" value="10">
+                        <Radio name="department" value="10">
                         Egyptian Art
                         </Radio>
-                        <Radio name="contact" value="11">
+                        <Radio name="department" value="11">
                         European Paintings
                         </Radio>
-                        <Radio name="contact" value="12">
+                        <Radio name="department" value="12">
                         European Sculpture and Decorative Arts
                         </Radio>
-                        <Radio name="contact" value="13">
+                        <Radio name="department" value="13">
                         Greek and Roman Art
                         </Radio>
-                        <Radio name="contact" value="14">
+                        <Radio name="department" value="14">
                         Islamic Art
                         </Radio>
-                        <Radio name="contact" value="15">
+                        <Radio name="department" value="15">
                         The Robert Lehman Collection
                         </Radio>
-                        <Radio name="contact" value="16">
+                        <Radio name="department" value="16">
                         The Libraries
                         </Radio>
-                        <Radio name="contact" value="17">
+                        <Radio name="department" value="17">
                         Medieval Art
                         </Radio>
-                        <Radio name="contact" value="18">
+                        <Radio name="department" value="18">
                         Musical Instruments
                         </Radio>
-                        <Radio name="contact" value="19">
+                        <Radio name="department" value="19">
                         Photographs
                         </Radio>
-                        <Radio name="contact" value="21">
+                        <Radio name="department" value="21">
                         Modern Art
                         </Radio>
                     </RadioGroup>
@@ -140,7 +141,7 @@ function Home() {
             {loading ? null : (
                 <div className="container">
                     <div className="detail">
-                        <h3>{ids.length} artworks available</h3>
+                        <h2>{ids.length} artworks available</h2>
                     </div>
                     <div className="showDetail">
                         {artworks && artworks.map((artwork) => (

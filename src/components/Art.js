@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 function Art({id, title, coverImg, artist}) { 
     return (
         <div key={id}>
-            <h1>{title}</h1>
-            <h1>{id}</h1>
+            <h3>{title}</h3>
+            <h3>{id}</h3>
             <img src={coverImg} alt={title} />
-            <h1>{artist}</h1>
+            <h3>{artist}</h3>
         </div>
     );
 }

@@ -43,7 +43,29 @@ fieldset {
 .container {
     margin: 2rem;
 }
-/* input[type=radio] {
-    display: none;
-    margin: 10px;
-} */
+
+form {
+    margin-right: 18rem;
+}
+
+.container h2 {
+    margin-bottom: 1rem;
+}
+
+label {
+    background-color:oldlace;
+    font-size: 18px;
+    font-family:'Courier New', Courier, monospace;
+}
+
+button {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 1rem;
+}
