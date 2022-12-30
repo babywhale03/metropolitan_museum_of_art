@@ -20,11 +20,12 @@
 
 .heading p { 
     text-align: center;
+    margin-bottom: 2rem;
 }
 
 .searchBox {
     text-align: center;
-    margin: 2rem;
+    margin-bottom: 2rem;
 }
 
 .search-bar {
@@ -35,6 +36,14 @@
     padding: 0.3rem 1rem;
 }
 
-.detail h3{
-    padding: 20px;
+fieldset {
+    border: none;
 }
+
+.container {
+    margin: 2rem;
+}
+/* input[type=radio] {
+    display: none;
+    margin: 10px;
+} */
