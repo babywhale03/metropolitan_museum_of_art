@@ -4,41 +4,36 @@ import Radio from "../components/Radio";
 import RadioGroup from "../components/RadioGroup";
 
 function Home() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [artworks, setArtWorks] = useState([]);
+    const [departArtWorks, setDepartArtWorks] = useState([]);
     const [title, setTitle] = useState("");
+    const [department, setDepartment] = useState("");
     const [ids, setIds] = useState([]);
+    const [searchIds, setSearchIds] = useState([]);
     const [search, setSearch] = useState(false);
     const onChange = (event) => setTitle(event.target.value);
     const searchArtWork = (event) => {
         if(event.key === "Enter") {
-            fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?q=${title}`)
+            fetch(`https://collectionapi.metmuseum.org/public/collection/v1/search?departmentID=${department}&q=${title}`)
             .then(response => response.json())
             .then((json) => {
-                getDetail(json.objectIDs);
+                getDetail(json.objectIDs.slice(0, 20));
                 setIds(json.objectIDs);
-                setLoading(false);
+                setLoading(true);
                 setTitle("");
             })
         }
     };
-    const getDetail = async(response) => {       
-        response.map(async(item, index) => {
-            if (index === 0) {
-                try {
-                    const result = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`);
-                    const json = await result.json();
-                    console.log(json);
-                    setArtWorks(state => {
-                        state = [...state, json]
-                        return state;
-                    });
-                } catch(error) {
-                    console.log('error');
-                }
-            }
+    const getDetail = async(res) => {       
+        res.map(async(item) => {
+            const result = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`);
+            const json = await result.json();
+            setArtWorks(state => {
+                state = [json, ...state]
+                return state;
+            });
         })
-        console.log(artworks);
     }
     const onSubmit = (event) => {
         event.preventDefault();
@@ -46,8 +41,22 @@ function Home() {
         .then(response => response.json())
         .then((json) => {
             setSearch(true);
+            setSearchIds(json.objectIDs);
+            getAllArt(json.objectIDs.slice(0, 20));
+            setDepartment(event.target.department.value);
         })
-        alert(`${event.target.department.value}`);
+        console.log(departArtWorks);
+    }
+    const getAllArt = async(res) => {
+        res.map(async(item) => {
+            const result = await fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${item}`);
+            const json = await result.json();
+            setDepartArtWorks(state => {
+                state = [json, ...state]
+                console.log(json);
+                return state;
+            });
+        })
     }
     return (
         <div className="main">
@@ -70,9 +79,44 @@ function Home() {
                 ) : null
                 }
             </div>
-            
-            {search ? null : (
+
+            {loading ? (
                 <div className="container">
+                    <div className="detail">
+                        <h2>{ids.length} artworks available</h2>
+                    </div>
+                    <div className="showDetail">
+                        {artworks && artworks.map((artwork) => (
+                            <Art   
+                                key={artwork.objectID}
+                                id={artwork.objectID}
+                                title={artwork.title}
+                                coverImg={artwork.primaryImage}
+                                artist={artwork.artistDisplayName}
+                            />
+                        ))}
+                    </div>
+                </div>
+            ) :
+            search ? (
+                <div className="container">
+                    <div className="detail">
+                        <h2>{searchIds.length} artworks available</h2>
+                    </div>
+                    <div className="showDetail">
+                        {departArtWorks && departArtWorks.map((artwork) => (
+                            <Art   
+                                key={artwork.objectID}
+                                id={artwork.objectID}
+                                title={artwork.title}
+                                coverImg={artwork.primaryImage}
+                                artist={artwork.artistDisplayName}
+                            />
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <div className="choose">
                     <h2>Choose Department</h2>
                     <form onSubmit={onSubmit}>
                     <RadioGroup>
@@ -136,24 +180,6 @@ function Home() {
                     </RadioGroup>
                     <button>제출</button>
                     </form>
-                </div>
-            )}
-            {loading ? null : (
-                <div className="container">
-                    <div className="detail">
-                        <h2>{ids.length} artworks available</h2>
-                    </div>
-                    <div className="showDetail">
-                        {artworks && artworks.map((artwork) => (
-                            <Art   
-                                key={artwork.objectID}
-                                id={artwork.objectID}
-                                title={artwork.title}
-                                coverImg={artwork.primaryImage}
-                                artist={artwork.artistDisplayName}
-                            />
-                        ))}
-                    </div>
                 </div>
             )}
         </div>
